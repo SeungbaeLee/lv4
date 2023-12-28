@@ -1,5 +1,6 @@
 package com.hh99.lv4.domain.instructor.dto;
 
+import com.hh99.lv4.domain.instructor.entity.Instructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,14 @@ public class InstructorPostDto {
         this.company = company;
         this.phoneNumber = phoneNumber;
         this.instruction = instruction;
+    }
+    public Instructor toEntity() {
+        return Instructor.builder()
+                .instructorName(this.instructorName)
+                .years(this.years)
+                .company(this.company)
+                .phoneNumber(this.phoneNumber)
+                .introduction(this.instruction)
+                .build();
     }
 }
