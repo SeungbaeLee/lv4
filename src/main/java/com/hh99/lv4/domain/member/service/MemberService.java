@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -30,5 +32,11 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
         return MemberResponseDto.fromEntity(savedMember);
+    }
+
+    public Member findMemberById(long memberId) {
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.orElseThrow(() -> new NullPointerException("회원을 찾을 수 없습니다."));
+        return member;
     }
 }
