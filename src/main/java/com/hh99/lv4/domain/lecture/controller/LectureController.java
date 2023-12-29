@@ -34,7 +34,14 @@ public class LectureController {
 
     @GetMapping
     public ResponseEntity readLectureByCategory(@RequestParam("category") Category category, String sortBy, String orderBy) {
-        List<LectureResponseDto> lectureResponseDtoList = lectureService.readLectureByCategory(category,sortBy,orderBy);
+        List<LectureResponseDto> lectureResponseDtoList = lectureService.readLectureByCategory(category, sortBy, orderBy);
         return new ResponseEntity<>(lectureResponseDtoList, HttpStatus.OK);
+    }
+
+    @PostMapping("/{lectureId}/likes/{memberId")//security 구현 후 memberid 삭제
+    public ResponseEntity likeLecture(@PathVariable("lectureId") @Positive long lectureId,
+                                      @PathVariable("memberId") @Positive long memberId) {
+        lectureService.likeLecture(lectureId,memberId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

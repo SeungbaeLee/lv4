@@ -7,6 +7,10 @@ import com.hh99.lv4.domain.lecture.dto.LectureResponseDto;
 import com.hh99.lv4.domain.lecture.entity.Category;
 import com.hh99.lv4.domain.lecture.entity.Lecture;
 import com.hh99.lv4.domain.lecture.repository.LectureRepository;
+import com.hh99.lv4.domain.like.entity.Like;
+import com.hh99.lv4.domain.like.repository.LikeRepository;
+import com.hh99.lv4.domain.member.entity.Member;
+import com.hh99.lv4.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +25,9 @@ import java.util.Optional;
 public class LectureService {
 
     private final InstructorService instructorService;
+    private final MemberService memberService;
     private final LectureRepository lectureRepository;
+    private final LikeRepository likeRepository;
 
     //create
     public LectureResponseDto createLecture(LecturePostDto postDto) {
@@ -57,6 +63,23 @@ public class LectureService {
         lectureList.sort(comparator);
 
         return LectureResponseDto.fromEntityList(lectureList);
+    }
+
+    public void likeLecture(long lectureId, long memberId) {
+        Lecture lecture = findLectureById(lectureId);
+        Member member = memberService.findMemberById(memberId);
+
+        Optional<Like> optionalLike = likeRepository.findByMemberIdAndLectureId(lectureId, memberId);
+        if (optionalLike.isPresent()) {
+            Like foundLike = optionalLike.get();
+            likeRepository.delete(foundLike);
+        } else {
+            Like like = Like.builder()
+                    .member(member)
+                    .lecture(lecture)
+                    .build();
+            likeRepository.save(like);
+        }
     }
 
     public Lecture findLectureById (long lectureId){
