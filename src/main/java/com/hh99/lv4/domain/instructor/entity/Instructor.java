@@ -1,13 +1,14 @@
 package com.hh99.lv4.domain.instructor.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.hh99.lv4.domain.lecture.entity.Lecture;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +19,7 @@ public class Instructor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long instructorId;
 
+
     private String instructorName;
 
     private Long years;
@@ -27,14 +29,17 @@ public class Instructor {
     private String phoneNumber;
 
     private String introduction;
+    @OneToMany(mappedBy = "instructor")
+    private List<Lecture> lectureList = new ArrayList<>();
 
     @Builder
-    public Instructor(Long instructorId, String instructorName, Long years, String company, String phoneNumber, String introduction) {
+    public Instructor(Long instructorId, String instructorName, Long years, String company, String phoneNumber, String introduction, List<Lecture> lectureList) {
         this.instructorId = instructorId;
         this.instructorName = instructorName;
         this.years = years;
         this.company = company;
         this.phoneNumber = phoneNumber;
         this.introduction = introduction;
+        this.lectureList = lectureList;
     }
 }
