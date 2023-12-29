@@ -25,16 +25,20 @@ public class Comment {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Long parentComment;
+    private Long parentCommentId;
 
     private String content;
 
     @Builder
-    public Comment(Long commentId, Lecture lecture, Member member, Long parentComment, String content) {
+    public Comment(Long commentId, Lecture lecture, Member member, Long parentCommentId, String content) {
         this.commentId = commentId;
         this.lecture = lecture;
         this.member = member;
-        this.parentComment = parentComment;
+        this.parentCommentId = parentCommentId;
+        this.content = content;
+    }
+
+    public void updateComment(String content) {
         this.content = content;
     }
 }
