@@ -72,9 +72,6 @@ public class LectureService {
         Member member = memberService.findMemberById(memberId);
 
         Optional<Like> optionalLike = likeRepository.findByMemberIdAndLectureId(lectureId, memberId);
-//        log.info("optionalLike = " + optionalLike);
-//        Like like = optionalLike.orElseThrow(() -> new RuntimeException("존재 안한다"));
-//        log.info("like = " + like);
         if (optionalLike.isPresent()) {
             Like foundLike = optionalLike.get();
             likeRepository.delete(foundLike);
