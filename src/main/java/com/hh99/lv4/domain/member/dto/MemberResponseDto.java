@@ -30,6 +30,7 @@ public class MemberResponseDto {
 
     public static MemberResponseDto fromEntity(Member member) {
         return MemberResponseDto.builder()
+                .memberId(member.getMemberId())
                 .email(member.getEmail())
                 .gender(member.getGender())
                 .phoneNumber(member.getPhoneNumber())
