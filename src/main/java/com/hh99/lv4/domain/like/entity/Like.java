@@ -2,6 +2,7 @@ package com.hh99.lv4.domain.like.entity;
 
 import com.hh99.lv4.domain.lecture.entity.Lecture;
 import com.hh99.lv4.domain.member.entity.Member;
+import com.hh99.lv4.global.auditing.Auditable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "likes")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Like {
+public class Like extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

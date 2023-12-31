@@ -2,6 +2,7 @@ package com.hh99.lv4.domain.comment.entity;
 
 import com.hh99.lv4.domain.lecture.entity.Lecture;
 import com.hh99.lv4.domain.member.entity.Member;
+import com.hh99.lv4.global.auditing.Auditable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

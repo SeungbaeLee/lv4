@@ -1,6 +1,7 @@
 package com.hh99.lv4.domain.instructor.entity;
 
 import com.hh99.lv4.domain.lecture.entity.Lecture;
+import com.hh99.lv4.global.auditing.Auditable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Instructor {
+public class Instructor extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
