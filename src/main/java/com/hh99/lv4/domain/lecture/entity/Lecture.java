@@ -3,6 +3,7 @@ package com.hh99.lv4.domain.lecture.entity;
 import com.hh99.lv4.domain.comment.entity.Comment;
 import com.hh99.lv4.domain.instructor.entity.Instructor;
 import com.hh99.lv4.domain.like.entity.Like;
+import com.hh99.lv4.global.auditing.Auditable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Lecture {
+public class Lecture extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +44,7 @@ public class Lecture {
     public Lecture(Long lectureId, Instructor instructor,List<Like> likeList, String lectureName, Long price, String introduction, Category category) {
         this.lectureId = lectureId;
         this.instructor = instructor;
-        this.likeList = likeList;
+        this.likeList = likeList != null ? likeList : new ArrayList<>();
         this.lectureName = lectureName;
         this.price = price;
         this.introduction = introduction;
