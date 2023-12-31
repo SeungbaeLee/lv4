@@ -1,5 +1,6 @@
 package com.hh99.lv4.domain.lecture.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hh99.lv4.domain.comment.entity.Comment;
 import com.hh99.lv4.domain.lecture.entity.Category;
 import com.hh99.lv4.domain.lecture.entity.Lecture;
@@ -18,11 +19,14 @@ public class LectureResponseDto {
     private String introduction;
     private Category category;
     private String instructorName;
+
+    @JsonIgnoreProperties("lecture")
     private List<Comment> commentList;
     private int likes;
 
+
     @Builder
-    public LectureResponseDto(Long lectureId, String lectureName, Long price, String introduction, Category category, String instructorName, List<Comment> commentList,int likes) {
+    public LectureResponseDto(Long lectureId, String lectureName, Long price, String introduction, Category category, String instructorName, List<Comment> commentList, int likes) {
         this.lectureId = lectureId;
         this.lectureName = lectureName;
         this.price = price;
