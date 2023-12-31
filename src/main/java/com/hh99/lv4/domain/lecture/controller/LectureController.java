@@ -38,7 +38,7 @@ public class LectureController {
         return new ResponseEntity<>(lectureResponseDtoList, HttpStatus.OK);
     }
 
-    @PostMapping("/{lectureId}/likes/{memberId")//security 구현 후 memberid 삭제
+    @PostMapping("/{lectureId}/likes/{memberId}")//security 구현 후 memberid 삭제
     public ResponseEntity likeLecture(@PathVariable("lectureId") @Positive long lectureId,
                                       @PathVariable("memberId") @Positive long memberId) {
         lectureService.likeLecture(lectureId,memberId);

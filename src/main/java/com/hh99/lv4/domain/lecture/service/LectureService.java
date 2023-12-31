@@ -12,6 +12,7 @@ import com.hh99.lv4.domain.like.repository.LikeRepository;
 import com.hh99.lv4.domain.member.entity.Member;
 import com.hh99.lv4.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class LectureService {
 
     private final InstructorService instructorService;
@@ -70,6 +72,9 @@ public class LectureService {
         Member member = memberService.findMemberById(memberId);
 
         Optional<Like> optionalLike = likeRepository.findByMemberIdAndLectureId(lectureId, memberId);
+//        log.info("optionalLike = " + optionalLike);
+//        Like like = optionalLike.orElseThrow(() -> new RuntimeException("존재 안한다"));
+//        log.info("like = " + like);
         if (optionalLike.isPresent()) {
             Like foundLike = optionalLike.get();
             likeRepository.delete(foundLike);
