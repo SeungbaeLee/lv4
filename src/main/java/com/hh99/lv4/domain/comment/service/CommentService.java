@@ -30,9 +30,7 @@ public class CommentService {
     public CommentResponseDto createComment(long lectureId, CommentPostDto postDto) {
         Lecture lecture = lectureService.findLectureById(lectureId);
 
-        UserDetails loginMember = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = loginMember.getUsername();
-        Member foundMember = memberService.findMemberByEmail(email);
+        Member foundMember = getMember();
 
         Comment comment = Comment.builder()
                 .member(foundMember)
@@ -48,9 +46,7 @@ public class CommentService {
         Comment parentComment = findCommentById(parentCommentId);
         Lecture lecture = lectureService.findLectureById(lectureId);
 
-        UserDetails loginMember = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = loginMember.getUsername();
-        Member foundMember = memberService.findMemberByEmail(email);
+        Member foundMember = getMember();
 
         Comment reply = Comment.builder()
                 .lecture(lecture)
@@ -65,7 +61,9 @@ public class CommentService {
 
     public CommentResponseDto updateComment(long commentId, CommentPatchDto patchDto) {
         Comment comment = findCommentById(commentId);
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member member = getMember();
+
         if (member.getMemberId() == comment.getMember().getMemberId()) {
             comment.updateComment(patchDto.getContent());
         } else throw new SecurityException("댓글 작성자만 수정 할 수 있습니다.");
@@ -75,7 +73,9 @@ public class CommentService {
 
     public void deleteComment(long commentId) {
         Comment comment = findCommentById(commentId);
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Member member = getMember();
+
         if (member.getMemberId() == comment.getMember().getMemberId()) {
             commentRepository.deleteById(commentId);
         } else throw new SecurityException("댓글 작성자만 삭제 할 수 있습니다.");
@@ -85,5 +85,12 @@ public class CommentService {
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
         Comment comment = optionalComment.orElseThrow(() -> new NullPointerException("존재하지 않는 댓글입니다."));
         return comment;
+    }
+
+    public Member getMember() {
+        UserDetails loginMember = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = loginMember.getUsername();
+        Member foundMember = memberService.findMemberByEmail(email);
+        return foundMember;
     }
 }
