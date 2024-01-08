@@ -25,7 +25,7 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Like> likeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Comment> commentList = new ArrayList<>();
 
     private String email;
